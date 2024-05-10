@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{c6789903-e3c2-498e-88e2-fb67e5c366ae}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)readme.txt" />
+    <Text Include="$(MSBuildThisFileDirectory)library.properties" />
+    <Text Include="$(MSBuildThisFileDirectory)src\SQLitePlusPlus.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- <ClInclude Include="$(MSBuildThisFileDirectory)SQLitePlusPlus.h" /> -->
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\SQLStatement.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\SQLiteError.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\DbConnection.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\SQLStatement.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\SQLiteError.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\DbConnection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\SQLitePlusPlus.cpp" />
+  </ItemGroup>
+</Project>
