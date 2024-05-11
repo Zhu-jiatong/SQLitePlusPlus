@@ -6,6 +6,7 @@
 
 #include "DbConnection.h"
 #include <SD.h>
+#include <iostream>
 
 // the setup function runs once when you press reset or power the board
 void setup()
@@ -20,17 +21,20 @@ void setup()
 			SD.remove("/test.db");
 
 		DbConnection db("/sd/test.db");
-		db.prepare("CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, key TEXT)").evaluate();
-		db.prepare("INSERT INTO test VALUES (?, ?)").bind(1, "hello").evaluate();
-		db.prepare("INSERT INTO test VALUES (?, ?)").bind(2, "world").evaluate();
+		db.prepare("CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, username TEXT, password TEXT)").evaluate();
+		db.prepare("INSERT INTO test VALUES (?, ?, ?)").bind(1, "Tony", "12345678").evaluate();
+		db.prepare("INSERT INTO test VALUES (?, ?, ?)").bind(2, "Tyrion", "20051206").evaluate();
+		db.prepare("INSERT INTO test VALUES (?, ?, ?)").bind(3, "hnt", "19960621").evaluate();
+		db.prepare("INSERT INTO test VALUES (?, ?, ?)").bind(4, "kgym", "19961222").evaluate();
 
 		SQLStatement stmt = db.prepare("SELECT * FROM test");
+		int columnCount = stmt.getColumnCount();
+		std::cout << "Column count: " << columnCount << '\n';
 		while (stmt.evaluate())
 		{
-			Serial.print("id: ");
-			Serial.print(stmt.getColumn<int>(0));
-			Serial.print(", key: ");
-			Serial.println(stmt.getColumn<std::string>(1).c_str());
+			for (int i = 0; i < columnCount; ++i)
+				std::cout << stmt.getColumnName(i) << ": " << stmt.getColumnValue<std::string>(i) << ", ";
+			std::cout << '\n';
 		}
 	}
 	catch (const std::exception& e)

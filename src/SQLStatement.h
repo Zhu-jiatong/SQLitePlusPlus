@@ -19,9 +19,13 @@ public:
 	}
 
 	bool evaluate();
+	void clearBindings();
 
 	template<typename T>
-	T getColumn(int index);
+	T getColumnValue(int index);
+
+	int getColumnCount() const;
+	std::string getColumnName(int index) const;
 
 private:
 	sqlite3_stmt* m_stmt;
