@@ -1,11 +1,12 @@
 #pragma once
 #include <sqlite3.h>
 #include <string>
+#include "DbConnection.h"
 
 class SQLStatement
 {
 public:
-	SQLStatement(sqlite3* dbHandle, const std::string& sql);
+	SQLStatement(DbConnection& db, const std::string& sql);
 	~SQLStatement() noexcept;
 
 	void finalise();
@@ -28,6 +29,7 @@ public:
 	std::string getColumnName(int index) const;
 
 private:
+	DbConnection& m_db;
 	sqlite3_stmt* m_stmt;
 	int m_paramIndex = 0;
 

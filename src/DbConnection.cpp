@@ -1,5 +1,6 @@
 #include "DbConnection.h"
 #include "SQLiteError.h"
+#include "SQLStatement.h"
 
 DbConnection::DbConnection(const std::string& filename)
 {
@@ -20,5 +21,5 @@ void DbConnection::close()
 
 SQLStatement DbConnection::prepare(const std::string& sql)
 {
-	return SQLStatement(m_dbHandle, sql);
+	return SQLStatement(*this, sql);
 }

@@ -4,14 +4,17 @@
  Author:	zhuji
 */
 
-#include "DbConnection.h"
+#include "SQLitePlusPlus.h"
 #include <SD.h>
 #include <iostream>
+
+void printThreadingMode();
 
 // the setup function runs once when you press reset or power the board
 void setup()
 {
 	Serial.begin(115200);
+	printThreadingMode();
 	try
 	{
 		if (!SD.begin())
@@ -47,4 +50,21 @@ void setup()
 void loop()
 {
 
+}
+
+void printThreadingMode()
+{
+	int mode = sqlite3_threadsafe();
+	switch (mode)
+	{
+	case 0:
+		Serial.println("Single-thread");
+		break;
+	case 1:
+		Serial.println("Multi-thread");
+		break;
+	case 2:
+		Serial.println("Serialized");
+		break;
+	}
 }

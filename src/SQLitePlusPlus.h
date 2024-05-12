@@ -14,6 +14,8 @@
 	#include "WProgram.h"
 #endif
 
+#include "DbConnection.h"
+#include "SQLStatement.h"
 
 #endif
 

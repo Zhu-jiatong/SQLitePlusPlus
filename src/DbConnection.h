@@ -3,7 +3,8 @@
 #include <string>
 #include <sqlite3.h>
 #include <mutex>
-#include <SQLStatement.h>
+
+class SQLStatement;
 
 class DbConnection
 {
@@ -13,6 +14,8 @@ public:
 
 	void close();
 	SQLStatement prepare(const std::string& sql);
+
+	friend class SQLStatement;
 
 private:
 	sqlite3* m_dbHandle;

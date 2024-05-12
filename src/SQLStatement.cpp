@@ -1,10 +1,11 @@
 #include "SQLStatement.h"
 #include "SQLiteError.h"
 
-SQLStatement::SQLStatement(sqlite3* dbHandle, const std::string& sql)
+SQLStatement::SQLStatement(DbConnection& db, const std::string& sql) :
+	m_db(db)
 {
-	int rc = sqlite3_prepare_v2(dbHandle, sql.c_str(), -1, &m_stmt, nullptr);
-	SQLiteError::checkError(dbHandle, rc);
+	int rc = sqlite3_prepare_v2(m_db.m_dbHandle, sql.c_str(), -1, &m_stmt, nullptr);
+	SQLiteError::checkError(m_db.m_dbHandle, rc);
 }
 
 SQLStatement::~SQLStatement() noexcept
