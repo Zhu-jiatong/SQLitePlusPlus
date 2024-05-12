@@ -21,6 +21,7 @@ void SQLStatement::finalise()
 
 bool SQLStatement::evaluate()
 {
+	std::lock_guard<std::mutex> lock(m_db.m_mutex);
 	int rc = sqlite3_step(m_stmt);
 	if (rc == SQLITE_ROW)
 		return true;
