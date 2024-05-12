@@ -4,6 +4,7 @@
 SQLStatement::SQLStatement(DbConnection& db, const std::string& sql) :
 	m_db(db)
 {
+	std::lock_guard<std::mutex> lock(m_db.m_mutex);
 	int rc = sqlite3_prepare_v2(m_db.m_dbHandle, sql.c_str(), -1, &m_stmt, nullptr);
 	SQLiteError::checkError(m_db.m_dbHandle, rc);
 }
@@ -33,6 +34,13 @@ bool SQLStatement::evaluate()
 void SQLStatement::clearBindings()
 {
 	int rc = sqlite3_clear_bindings(m_stmt);
+	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
+	m_paramIndex = 0;
+}
+
+void SQLStatement::reset()
+{
+	int rc = sqlite3_reset(m_stmt);
 	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
 	m_paramIndex = 0;
 }
@@ -72,7 +80,7 @@ void SQLStatement::bind(double value)
 	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
 }
 
-void SQLStatement::bind(const std::string& value)
+void SQLStatement::bind(std::string value)
 {
 	bind(value.c_str());
 }

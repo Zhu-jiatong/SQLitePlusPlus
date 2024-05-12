@@ -11,6 +11,13 @@ public:
 
 	void finalise();
 
+	template<typename T>
+	SQLStatement& bind(T&& value)
+	{
+		bind(std::forward<T>(value));
+		return *this;
+	}
+
 	template<typename T, typename... Args>
 	SQLStatement& bind(T&& value, Args&&... args)
 	{
@@ -21,6 +28,7 @@ public:
 
 	bool evaluate();
 	void clearBindings();
+	void reset();
 
 	template<typename T>
 	T getColumnValue(int index);
@@ -37,7 +45,7 @@ private:
 	void bind(uint32_t value);
 	void bind(int64_t value);
 	void bind(double value);
-	void bind(const std::string& value);
+	void bind(std::string value);
 	void bind(const char* value);
 	void bind(std::nullptr_t);
 };
