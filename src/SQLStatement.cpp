@@ -56,44 +56,50 @@ std::string SQLStatement::getColumnName(int index) const
 	return name ? name : "";
 }
 
-void SQLStatement::bind(int32_t value)
+void SQLStatement::m_bind(int32_t value)
 {
 	int rc = sqlite3_bind_int(m_stmt, ++m_paramIndex, value);
 	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
 }
 
-void SQLStatement::bind(uint32_t value)
+void SQLStatement::m_bind(uint32_t value)
 {
 	int rc = sqlite3_bind_int64(m_stmt, ++m_paramIndex, value);
 	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
 }
 
-void SQLStatement::bind(int64_t value)
+void SQLStatement::m_bind(int64_t value)
 {
 	int rc = sqlite3_bind_int64(m_stmt, ++m_paramIndex, value);
 	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
 }
 
-void SQLStatement::bind(double value)
+void SQLStatement::m_bind(double value)
 {
 	int rc = sqlite3_bind_double(m_stmt, ++m_paramIndex, value);
 	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
 }
 
-void SQLStatement::bind(std::string value)
+void SQLStatement::m_bind(const std::string& value)
 {
 	bind(value.c_str());
 }
 
-void SQLStatement::bind(const char* value)
+void SQLStatement::m_bind(const char* value)
 {
 	int rc = sqlite3_bind_text(m_stmt, ++m_paramIndex, value, -1, SQLITE_TRANSIENT);
 	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
 }
 
-void SQLStatement::bind(std::nullptr_t)
+void SQLStatement::m_bind(std::nullptr_t)
 {
 	int rc = sqlite3_bind_null(m_stmt, ++m_paramIndex);
+	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
+}
+
+void SQLStatement::m_bind(const std::vector<uint8_t>& value)
+{
+	int rc = sqlite3_bind_blob(m_stmt, ++m_paramIndex, value.data(), value.size(), SQLITE_TRANSIENT);
 	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
 }
 

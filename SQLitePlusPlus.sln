@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestExample", "examples\Tes
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultithreadTest", "examples\MultithreadTest\MultithreadTest.vcxproj", "{5E750A5E-696E-4709-99B5-D304A1913D43}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConstReferenceTest", "examples\ConstReferenceTest\ConstReferenceTest.vcxproj", "{C55E3503-1DFB-4475-9FF4-6E8A0970F401}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -69,6 +71,30 @@ Global
 		{5E750A5E-696E-4709-99B5-D304A1913D43}.Release|x86.ActiveCfg = Release|x86
 		{5E750A5E-696E-4709-99B5-D304A1913D43}.Release|x86.Build.0 = Release|x86
 		{5E750A5E-696E-4709-99B5-D304A1913D43}.Release|x86.Deploy.0 = Release|x86
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|ARM.Build.0 = Debug|ARM
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|ARM.Deploy.0 = Debug|ARM
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|ARM64.Build.0 = Debug|ARM64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|x64.ActiveCfg = Debug|x64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|x64.Build.0 = Debug|x64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|x64.Deploy.0 = Debug|x64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|x86.ActiveCfg = Debug|x86
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|x86.Build.0 = Debug|x86
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Debug|x86.Deploy.0 = Debug|x86
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|ARM.ActiveCfg = Release|ARM
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|ARM.Build.0 = Release|ARM
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|ARM.Deploy.0 = Release|ARM
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|ARM64.ActiveCfg = Release|ARM64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|ARM64.Build.0 = Release|ARM64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|ARM64.Deploy.0 = Release|ARM64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|x64.ActiveCfg = Release|x64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|x64.Build.0 = Release|x64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|x64.Deploy.0 = Release|x64
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|x86.ActiveCfg = Release|x86
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|x86.Build.0 = Release|x86
+		{C55E3503-1DFB-4475-9FF4-6E8A0970F401}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +105,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SQLitePlusPlus.vcxitems*{5e750a5e-696e-4709-99b5-d304a1913d43}*SharedItemsImports = 4
 		SQLitePlusPlus.vcxitems*{a3ab60f2-327c-41ee-bcfd-ac65cca58dbe}*SharedItemsImports = 4
+		SQLitePlusPlus.vcxitems*{c55e3503-1dfb-4475-9ff4-6e8a0970f401}*SharedItemsImports = 4
 		SQLitePlusPlus.vcxitems*{c6789903-e3c2-498e-88e2-fb67e5c366ae}*SharedItemsImports = 9
 	EndGlobalSection
 EndGlobal

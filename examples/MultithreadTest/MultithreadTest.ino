@@ -10,8 +10,6 @@
 #include <thread>
 #include <esp_pthread.h>
 
-std::shared_ptr<DbConnection> commonDb;
-
 // the setup function runs once when you press reset or power the board
 void setup()
 {
@@ -28,11 +26,11 @@ void setup()
 
 		initialiseDatabase();
 
-		commonDb = std::make_shared<DbConnection>("/sd/test.db");
+		DbConnection commonDb("/sd/test.db");
 
-		std::thread t1(accessDatabaseWrite, 1, commonDb);
-		std::thread t2(accessDatabaseWrite, 2, commonDb);
-		std::thread t3(accessDatabaseRead, 3, commonDb);
+		std::thread t1(accessDatabaseWrite, 1, std::ref(commonDb));
+		std::thread t2(accessDatabaseWrite, 2, std::ref(commonDb));
+		std::thread t3(accessDatabaseRead, 3, std::ref(commonDb));
 
 		t1.join();
 		t2.join();
@@ -84,9 +82,9 @@ void initialiseDatabase()
 	}
 }
 
-void accessDatabaseRead(int threadId, std::shared_ptr<DbConnection> db)
+void accessDatabaseRead(int threadId, DbConnection& db)
 {
-	SQLStatement stmt = db->prepare("SELECT * FROM test");
+	SQLStatement stmt = db.prepare("SELECT * FROM test");
 	int columnCount = stmt.getColumnCount();
 	std::cout << "Column count: " << columnCount << '\n';
 	while (stmt.evaluate())
@@ -97,9 +95,9 @@ void accessDatabaseRead(int threadId, std::shared_ptr<DbConnection> db)
 	}
 }
 
-void accessDatabaseWrite(int threadId, std::shared_ptr<DbConnection>db)
+void accessDatabaseWrite(int threadId, DbConnection& db)
 {
-	SQLStatement stmt = db->prepare("INSERT INTO test (phone) VALUES (?)");
+	SQLStatement stmt = db.prepare("INSERT INTO test (phone) VALUES (?)");
 	for (int i = 0; i < 30; ++i)
 	{
 		uint8_t buffer[11];

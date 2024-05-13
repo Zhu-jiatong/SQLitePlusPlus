@@ -2,6 +2,7 @@
 #include <sqlite3.h>
 #include <string>
 #include "DbConnection.h"
+#include <vector>
 
 class SQLStatement
 {
@@ -14,14 +15,14 @@ public:
 	template<typename T>
 	SQLStatement& bind(T&& value)
 	{
-		bind(std::forward<T>(value));
+		m_bind(std::forward<T>(value));
 		return *this;
 	}
 
 	template<typename T, typename... Args>
 	SQLStatement& bind(T&& value, Args&&... args)
 	{
-		bind(std::forward<T>(value));
+		m_bind(std::forward<T>(value));
 		bind(std::forward<Args>(args)...);
 		return *this;
 	}
@@ -41,12 +42,13 @@ private:
 	sqlite3_stmt* m_stmt;
 	int m_paramIndex = 0;
 
-	void bind(int32_t value);
-	void bind(uint32_t value);
-	void bind(int64_t value);
-	void bind(double value);
-	void bind(std::string value);
-	void bind(const char* value);
-	void bind(std::nullptr_t);
+	void m_bind(int32_t value);
+	void m_bind(uint32_t value);
+	void m_bind(int64_t value);
+	void m_bind(double value);
+	void m_bind(const std::string& value);
+	void m_bind(const char* value);
+	void m_bind(std::nullptr_t);
+	void m_bind(const std::vector<uint8_t>& value);
 };
 
