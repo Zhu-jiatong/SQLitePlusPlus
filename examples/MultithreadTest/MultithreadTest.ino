@@ -18,11 +18,13 @@ void setup()
 	esp_pthread_cfg_t cfg = esp_pthread_get_default_config();
 	cfg.stack_size = 4096 * 2;
 	esp_pthread_set_cfg(&cfg);
-
+	long start = millis();
 	try
 	{
-		if (!SD.begin())
+		if (!SD.begin(SS, SPI, 80000000))
 			throw std::runtime_error("SD card failed");
+
+		printThreadingMode();
 
 		initialiseDatabase();
 
@@ -42,6 +44,8 @@ void setup()
 	{
 		std::cerr << e.what() << '\n';
 	}
+	long end = millis();
+	std::cout << "Time taken: " << end - start << "ms\n";
 }
 
 // the loop function runs over and over again until power down or reset
@@ -123,5 +127,22 @@ void printTable()
 		for (int i = 0; i < columnCount; ++i)
 			std::cout << stmt.getColumnName(i) << ": " << stmt.getColumnValue<std::string>(i) << ", ";
 		std::cout << '\n';
+	}
+}
+
+void printThreadingMode()
+{
+	int mode = sqlite3_threadsafe();
+	switch (mode)
+	{
+	case 0:
+		Serial.println("Single-thread");
+		break;
+	case 1:
+		Serial.println("Multi-thread");
+		break;
+	case 2:
+		Serial.println("Serialized");
+		break;
 	}
 }

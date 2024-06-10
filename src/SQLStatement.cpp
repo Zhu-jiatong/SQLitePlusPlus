@@ -74,6 +74,16 @@ void SQLStatement::m_bind(int64_t value)
 	SQLiteError::checkError(sqlite3_db_handle(m_stmt), rc);
 }
 
+void SQLStatement::m_bind(uint64_t value)
+{
+	m_bind(std::to_string(value));
+}
+
+void SQLStatement::m_bind(bool value)
+{
+	m_bind(static_cast<int>(value));
+}
+
 void SQLStatement::m_bind(double value)
 {
 	int rc = sqlite3_bind_double(m_stmt, ++m_paramIndex, value);
@@ -132,4 +142,25 @@ std::string SQLStatement::getColumnValue<std::string>(int index)
 {
 	const char* text = reinterpret_cast<const char*>(sqlite3_column_text(m_stmt, index));
 	return text ? text : "";
+}
+
+template<>
+std::vector<uint8_t> SQLStatement::getColumnValue<std::vector<uint8_t>>(int index)
+{
+	const uint8_t* blob = reinterpret_cast<const uint8_t*>(sqlite3_column_blob(m_stmt, index));
+	int size = sqlite3_column_bytes(m_stmt, index);
+	return { blob, blob + size };
+}
+
+template<>
+bool SQLStatement::getColumnValue<bool>(int index)
+{
+	return sqlite3_column_int(m_stmt, index);
+}
+
+template<>
+uint64_t SQLStatement::getColumnValue<uint64_t>(int index)
+{
+	std::string text = getColumnValue<std::string>(index);
+	return std::stoull(text);
 }

@@ -45,6 +45,8 @@ private:
 	void m_bind(int32_t value);
 	void m_bind(uint32_t value);
 	void m_bind(int64_t value);
+	void m_bind(uint64_t value);
+	void m_bind(bool value);
 	void m_bind(double value);
 	void m_bind(const std::string& value);
 	void m_bind(const char* value);
