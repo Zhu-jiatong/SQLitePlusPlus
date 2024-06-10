@@ -21,7 +21,7 @@ void setup()
 		if (SD.exists("/test.db"))
 			SD.remove("/test.db");
 
-		DbConnection db("/sd/test.db");
+		SQLite::DbConnection db("/sd/test.db");
 		printForeignKeyMode(db);
 
 		db.prepare(
@@ -75,9 +75,9 @@ void loop()
 
 }
 
-void printTable(DbConnection& db)
+void printTable(SQLite::DbConnection& db)
 {
-	SQLStatement stmt = db.prepare("SELECT * FROM test");
+	SQLite::SQLStatement stmt = db.prepare("SELECT * FROM test");
 	int columnCount = stmt.getColumnCount();
 	std::cout << "Column count: " << columnCount << '\n';
 	while (stmt.evaluate())
@@ -88,9 +88,9 @@ void printTable(DbConnection& db)
 	}
 }
 
-void printForeignKeyMode(DbConnection& db)
+void printForeignKeyMode(SQLite::DbConnection& db)
 {
-	SQLStatement stmt = db.prepare("PRAGMA foreign_keys");
+	SQLite::SQLStatement stmt = db.prepare("PRAGMA foreign_keys");
 	int columnCount = stmt.getColumnCount();
 	std::cout << "ForeignKeyMode: " << '\n';
 	while (stmt.evaluate())

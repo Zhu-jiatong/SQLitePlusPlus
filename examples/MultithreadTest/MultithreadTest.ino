@@ -28,7 +28,7 @@ void setup()
 
 		initialiseDatabase();
 
-		DbConnection commonDb("/sd/test.db");
+		SQLite::DbConnection commonDb("/sd/test.db");
 
 		std::thread t1(accessDatabaseWrite, 1, std::ref(commonDb));
 		std::thread t2(accessDatabaseWrite, 2, std::ref(commonDb));
@@ -59,10 +59,10 @@ void initialiseDatabase()
 	if (SD.exists("/test.db"))
 		SD.remove("/test.db");
 
-	DbConnection db("/sd/test.db");
+	SQLite::DbConnection db("/sd/test.db");
 	db.prepare("CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY AUTOINCREMENT, phone TEXT)").evaluate();
 
-	SQLStatement insertion = db.prepare("INSERT INTO test (phone) VALUES (?)");
+	SQLite::SQLStatement insertion = db.prepare("INSERT INTO test (phone) VALUES (?)");
 	for (int i = 0; i < 10; ++i)
 	{
 		uint8_t buffer[11];
@@ -75,7 +75,7 @@ void initialiseDatabase()
 		insertion.reset();
 	}
 
-	SQLStatement selection = db.prepare("SELECT * FROM test");
+	SQLite::SQLStatement selection = db.prepare("SELECT * FROM test");
 	int columnCount = selection.getColumnCount();
 	std::cout << "Column count: " << columnCount << '\n';
 	while (selection.evaluate())
@@ -86,9 +86,9 @@ void initialiseDatabase()
 	}
 }
 
-void accessDatabaseRead(int threadId, DbConnection& db)
+void accessDatabaseRead(int threadId, SQLite::DbConnection& db)
 {
-	SQLStatement stmt = db.prepare("SELECT * FROM test");
+	SQLite::SQLStatement stmt = db.prepare("SELECT * FROM test");
 	int columnCount = stmt.getColumnCount();
 	std::cout << "Column count: " << columnCount << '\n';
 	while (stmt.evaluate())
@@ -99,9 +99,9 @@ void accessDatabaseRead(int threadId, DbConnection& db)
 	}
 }
 
-void accessDatabaseWrite(int threadId, DbConnection& db)
+void accessDatabaseWrite(int threadId, SQLite::DbConnection& db)
 {
-	SQLStatement stmt = db.prepare("INSERT INTO test (phone) VALUES (?)");
+	SQLite::SQLStatement stmt = db.prepare("INSERT INTO test (phone) VALUES (?)");
 	for (int i = 0; i < 30; ++i)
 	{
 		uint8_t buffer[11];
@@ -118,8 +118,8 @@ void accessDatabaseWrite(int threadId, DbConnection& db)
 
 void printTable()
 {
-	DbConnection db("/sd/test.db");
-	SQLStatement stmt = db.prepare("SELECT * FROM test");
+	SQLite::DbConnection db("/sd/test.db");
+	SQLite::SQLStatement stmt = db.prepare("SELECT * FROM test");
 	int columnCount = stmt.getColumnCount();
 	std::cout << "Column count: " << columnCount << '\n';
 	while (stmt.evaluate())

@@ -20,7 +20,7 @@ void setup() {
 		if (SD.exists("/test.db"))
 			SD.remove("/test.db");
 
-		DbConnection db("/sd/test.db");
+		SQLite::DbConnection db("/sd/test.db");
 		db.prepare("CREATE TABLE IF NOT EXISTS test (username TEXT PRIMARY KEY, password TEXT) WITHOUT ROWID").evaluate();
 		
 		std::string username = "Tony";
@@ -42,8 +42,8 @@ void loop() {
 
 void printTable()
 {
-	DbConnection db("/sd/test.db");
-	SQLStatement stmt = db.prepare("SELECT * FROM test");
+	SQLite::DbConnection db("/sd/test.db");
+	SQLite::SQLStatement stmt = db.prepare("SELECT * FROM test");
 	int columnCount = stmt.getColumnCount();
 	std::cout << "Column count: " << columnCount << '\n';
 	while (stmt.evaluate())

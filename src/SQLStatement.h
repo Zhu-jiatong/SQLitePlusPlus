@@ -4,7 +4,7 @@
 #include "DbConnection.h"
 #include <vector>
 
-class SQLStatement
+class SQLite::SQLStatement
 {
 public:
 	SQLStatement(DbConnection& db, const std::string& sql);

@@ -4,9 +4,12 @@
 #include <sqlite3.h>
 #include <mutex>
 
-class SQLStatement;
+namespace SQLite {
+	class SQLStatement;
+	class DbConnection;
+}
 
-class DbConnection
+class SQLite::DbConnection
 {
 public:
 	DbConnection(const std::string& filename);

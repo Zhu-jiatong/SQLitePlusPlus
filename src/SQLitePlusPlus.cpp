@@ -6,5 +6,16 @@
 */
 
 #include "SQLitePlusPlus.h"
+#include "SQLiteError.h"
 
+void SQLite::initialise()
+{
+	int rc = sqlite3_initialize();
+	SQLiteError::checkError(rc);
+}
 
+void SQLite::shutdown()
+{
+	int rc = sqlite3_shutdown();
+	SQLiteError::checkError(rc);
+}
