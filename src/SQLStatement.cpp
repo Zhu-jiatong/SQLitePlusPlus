@@ -81,7 +81,7 @@ void SQLite::SQLStatement::m_bind(uint64_t value)
 
 void SQLite::SQLStatement::m_bind(bool value)
 {
-	m_bind(static_cast<int>(value));
+	m_bind(static_cast<int32_t>(value));
 }
 
 void SQLite::SQLStatement::m_bind(double value)
