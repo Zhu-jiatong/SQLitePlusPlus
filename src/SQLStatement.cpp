@@ -138,9 +138,15 @@ double SQLite::SQLStatement::getColumnValue<double>(int index)
 }
 
 template<>
+const char* SQLite::SQLStatement::getColumnValue<const char*>(int index)
+{
+	return reinterpret_cast<const char*>(sqlite3_column_text(m_stmt, index));
+}
+
+template<>
 std::string SQLite::SQLStatement::getColumnValue<std::string>(int index)
 {
-	const char* text = reinterpret_cast<const char*>(sqlite3_column_text(m_stmt, index));
+	const char* text = getColumnValue<const char*>(index);
 	return text ? text : "";
 }
 
