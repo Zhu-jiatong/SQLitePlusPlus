@@ -22,6 +22,7 @@ void setup()
 			SD.remove("/test.db");
 
 		SQLite::DbConnection db("/sd/test.db");
+		db.prepare("PRAGMA foreign_keys = ON").evaluate();
 		printForeignKeyMode(db);
 
 		db.prepare(
@@ -92,6 +93,7 @@ void printForeignKeyMode(SQLite::DbConnection& db)
 {
 	SQLite::SQLStatement stmt = db.prepare("PRAGMA foreign_keys");
 	int columnCount = stmt.getColumnCount();
+	std::cout << "Column count: " << columnCount << '\n';
 	std::cout << "ForeignKeyMode: " << '\n';
 	while (stmt.evaluate())
 	{
