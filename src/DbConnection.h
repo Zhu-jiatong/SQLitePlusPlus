@@ -12,6 +12,7 @@
 namespace SQLite {
 	class SQLStatement;
 	class DbConnection;
+	class SQLValue;
 }
 
 class SQLite::DbConnection
@@ -43,6 +44,11 @@ public:
 
 	template<typename T>
 	std::optional<std::shared_ptr<T>> beforeRowUpdate(RowUpdateCallback<T> callback, T& bindParam);
+
+	SQLValue preupdateOld(int col);
+	SQLValue preupdateNew(int col);
+	size_t preupdateCount();
+	size_t preupdateDepth();
 
 	friend class SQLStatement;
 

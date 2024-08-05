@@ -20,11 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <!-- <ClInclude Include="$(MSBuildThisFileDirectory)SQLitePlusPlus.h" /> -->
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\SQLValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SQLStatement.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SQLiteError.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\DbConnection.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\SQLValue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\SQLStatement.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\SQLiteError.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\DbConnection.cpp" />

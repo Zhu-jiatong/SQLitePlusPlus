@@ -16,6 +16,7 @@
 
 #include "DbConnection.h"
 #include "SQLStatement.h"
+#include "SQLValue.h"
 
 namespace SQLite {
 	void initialise();

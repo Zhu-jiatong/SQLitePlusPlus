@@ -133,7 +133,7 @@ void initialiseDatabase(SQLite::DbConnection& db)
 
 void updateRowCallback(std::string bind, SQLite::DbConnection& db, SQLite::DbConnection::ColumnUpdateType opType, const std::string& dbName, const std::string& tableName, std::int64_t rowID, std::optional<std::int64_t> newRowID)
 {
-	std::cout << "Row update callback called\n";
+	std::cout << "\nRow update callback called\n";
 	std::cout << "Operation type: " << static_cast<int>(opType) << '\n';
 	std::cout << "Database name: " << dbName << '\n';
 	std::cout << "Table name: " << tableName << '\n';
@@ -141,4 +141,56 @@ void updateRowCallback(std::string bind, SQLite::DbConnection& db, SQLite::DbCon
 	if (newRowID)
 		std::cout << "New row ID: " << *newRowID << '\n';
 	std::cout << "Bind: " << bind << '\n';
+
+	std::cout << "Update info:\n";
+	std::cout << "column count: " << db.preupdateCount() << '\n';
+	std::cout << "depth: " << db.preupdateDepth() << '\n';
+	for (size_t i = 0; i < db.preupdateCount(); ++i)
+	{
+		std::cout << "Column " << i << ":\n";
+
+		if (opType != SQLite::DbConnection::ColumnUpdateType::INSERT)
+		{
+			SQLite::SQLValue oldVal = db.preupdateOld(i);
+			switch (oldVal.type())
+			{
+			case SQLite::SQLValue::Type::INTEGER:
+				std::cout << "Old value: " << oldVal.get<std::int32_t>() << '\n';
+				break;
+
+			case SQLite::SQLValue::Type::FLOAT:
+				std::cout << "Old value: " << oldVal.get<double>() << '\n';
+				break;
+
+			case SQLite::SQLValue::Type::TEXT:
+				std::cout << "Old value: " << oldVal.get<std::string>() << '\n';
+				break;
+
+			default:
+				std::cout << "Old value: ?\n";
+			}
+		}
+
+		if (opType != SQLite::DbConnection::ColumnUpdateType::DELETE)
+		{
+			SQLite::SQLValue newVal = db.preupdateNew(i);
+			switch (newVal.type())
+			{
+			case SQLite::SQLValue::Type::INTEGER:
+				std::cout << "New value: " << newVal.get<std::int32_t>() << '\n';
+				break;
+
+			case SQLite::SQLValue::Type::FLOAT:
+				std::cout << "New value: " << newVal.get<double>() << '\n';
+				break;
+
+			case SQLite::SQLValue::Type::TEXT:
+				std::cout << "New value: " << newVal.get<std::string>() << '\n';
+				break;
+
+			default:
+				std::cout << "New value: ?\n";
+			}
+		}
+	}
 }
