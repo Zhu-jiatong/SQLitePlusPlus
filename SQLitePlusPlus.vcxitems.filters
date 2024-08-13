@@ -47,5 +47,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SQLValue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\ReusableSQLStatement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

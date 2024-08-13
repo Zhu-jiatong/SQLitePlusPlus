@@ -65,14 +65,14 @@ void initialiseDatabase()
 	SQLite::SQLStatement insertion = db.prepare("INSERT INTO test (phone) VALUES (?)");
 	for (int i = 0; i < 10; ++i)
 	{
+		SQLite::ReusableSQLStatement reusableInsertion(insertion);
 		uint8_t buffer[11];
 		esp_fill_random(buffer, sizeof(buffer));
 		std::string phone = "+";
 		for (auto& byte : buffer)
 			phone += std::to_string(byte % 10);
 
-		insertion.bind<>(phone).evaluate();
-		insertion.reset();
+		reusableInsertion->bind(phone).evaluate();
 	}
 
 	SQLite::SQLStatement selection = db.prepare("SELECT * FROM test");
@@ -104,14 +104,14 @@ void accessDatabaseWrite(int threadId, SQLite::DbConnection& db)
 	SQLite::SQLStatement stmt = db.prepare("INSERT INTO test (phone) VALUES (?)");
 	for (int i = 0; i < 30; ++i)
 	{
+		SQLite::ReusableSQLStatement reusableStmt(stmt);
 		uint8_t buffer[11];
 		esp_fill_random(buffer, sizeof(buffer));
 		std::string phone = "+";
 		for (auto& byte : buffer)
 			phone += std::to_string(byte % 10);
 
-		stmt.bind<>(phone).evaluate();
-		stmt.reset();
+		reusableStmt->bind(phone).evaluate();
 		std::cout << threadId << " - Write complete\n";
 	}
 }

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- <ClInclude Include="$(MSBuildThisFileDirectory)SQLitePlusPlus.h" /> -->
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\ReusableSQLStatement.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SQLValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SQLStatement.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\SQLiteError.h" />
