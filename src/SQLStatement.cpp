@@ -9,9 +9,9 @@ SQLite::SQLStatement::SQLStatement(DbConnection& db, const std::string& sql) :
 	SQLiteError::checkError(m_db.m_dbHandle, rc);
 }
 
-SQLite::SQLStatement::~SQLStatement() noexcept
+SQLite::SQLStatement::~SQLStatement()
 {
-	finalise();
+	sqlite3_finalize(m_stmt);
 }
 
 void SQLite::SQLStatement::finalise()
